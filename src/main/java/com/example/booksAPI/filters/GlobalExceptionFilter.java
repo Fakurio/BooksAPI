@@ -6,7 +6,7 @@ import com.example.booksAPI.exceptions.ResourceNotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,7 +26,7 @@ public class GlobalExceptionFilter {
     }
 
     @ExceptionHandler({BadRequestException.class, MethodArgumentNotValidException.class,
-            HttpMessageNotReadableException.class, ConstraintViolationException.class})
+            ConstraintViolationException.class, AuthenticationException.class})
     public ResponseEntity<?> handleBadRequestException(Exception ex) {
         switch (ex) {
             case MethodArgumentNotValidException methodArgumentNotValidException -> {
@@ -38,10 +38,6 @@ public class GlobalExceptionFilter {
                 });
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
             }
-            case HttpMessageNotReadableException httpMessageNotReadableException -> {
-                ErrorResponse response = new ErrorResponse("Invalid input format for one of fields", "400");
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
-            }
             case ConstraintViolationException constraintViolationException -> {
                 String[] messages = ex.getMessage().split(",");
                 HashMap<String, List<String>> errors = new HashMap<>();
@@ -52,8 +48,7 @@ public class GlobalExceptionFilter {
                 }
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
             }
-            case null, default -> {
-                assert ex != null;
+            default -> {
                 ErrorResponse response = new ErrorResponse(ex.getMessage(), "400");
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
             }

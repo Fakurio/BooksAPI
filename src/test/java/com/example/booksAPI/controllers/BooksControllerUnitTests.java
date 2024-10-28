@@ -2,6 +2,7 @@ package com.example.booksAPI.controllers;
 
 import com.example.booksAPI.dto.*;
 import com.example.booksAPI.entities.Book;
+import com.example.booksAPI.filters.JwtFilter;
 import com.example.booksAPI.services.BooksService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @WebMvcTest(BooksController.class)
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 public class BooksControllerUnitTests {
     @Autowired
     private MockMvc mockMvc;
@@ -37,6 +39,9 @@ public class BooksControllerUnitTests {
     @MockBean
     private BooksService booksService;
 
+    @MockBean
+    private JwtFilter jwtFilter;
+
     private List<Book> books;
     private final SuccessResponse successResponse = new SuccessResponse("");
 
@@ -45,6 +50,7 @@ public class BooksControllerUnitTests {
         this.books = Arrays.asList(new Book(1, "Title 1", 2024, "Kamil", new ArrayList<>()),
                 new Book(2, "Title 2", 2023, "Kamil", new ArrayList<>()));
     }
+
 
     @Test
     public void testGetAllBooks() throws Exception {
