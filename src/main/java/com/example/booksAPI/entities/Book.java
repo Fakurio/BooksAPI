@@ -1,5 +1,6 @@
 package com.example.booksAPI.entities;
 
+import com.example.booksAPI.enums.Publisher;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,6 +23,9 @@ public class Book {
     private Integer year;
 
     private String author;
+
+    @Enumerated(EnumType.STRING)
+    private Publisher publisher;
 
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     private List<Rating> ratings;

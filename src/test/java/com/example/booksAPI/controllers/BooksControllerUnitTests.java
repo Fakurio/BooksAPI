@@ -2,6 +2,7 @@ package com.example.booksAPI.controllers;
 
 import com.example.booksAPI.dto.*;
 import com.example.booksAPI.entities.Book;
+import com.example.booksAPI.enums.Publisher;
 import com.example.booksAPI.filters.JwtFilter;
 import com.example.booksAPI.services.BooksService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -47,8 +48,9 @@ public class BooksControllerUnitTests {
 
     @BeforeEach
     public void setUp() {
-        this.books = Arrays.asList(new Book(1, "Title 1", 2024, "Kamil", new ArrayList<>()),
-                new Book(2, "Title 2", 2023, "Kamil", new ArrayList<>()));
+        this.books = Arrays.asList(new Book(1, "Title 1", 2024, "Kamil", Publisher.POLLUB,
+                        new ArrayList<>()),
+                new Book(2, "Title 2", 2023, "Kamil", Publisher.POLLUB, new ArrayList<>()));
     }
 
 
@@ -76,7 +78,7 @@ public class BooksControllerUnitTests {
 
     @Test
     public void testAddBook_ValidData() throws Exception {
-        AddBookDTO newBook = new AddBookDTO("Title 3", "2022", "Kamil");
+        AddBookDTO newBook = new AddBookDTO("Title 3", "2022", "Kamil", Publisher.POLLUB);
         when(this.booksService.addBook(any(AddBookDTO.class))).thenReturn(ResponseEntity.ok(this.successResponse));
         this.mockMvc.perform(post("/books")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -87,7 +89,7 @@ public class BooksControllerUnitTests {
 
     @Test
     public void testAddBook_InvalidData() throws Exception {
-        AddBookDTO newBook = new AddBookDTO("", "2022222", "Kamil");
+        AddBookDTO newBook = new AddBookDTO("", "2022222", "Kamil", Publisher.POLLUB);
         this.mockMvc.perform(post("/books")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(this.mapper.writeValueAsString(newBook)))

@@ -2,6 +2,7 @@ package com.example.booksAPI.services;
 
 import com.example.booksAPI.dto.*;
 import com.example.booksAPI.entities.Book;
+import com.example.booksAPI.enums.Publisher;
 import com.example.booksAPI.exceptions.BadRequestException;
 import com.example.booksAPI.exceptions.ResourceNotFoundException;
 import com.example.booksAPI.repositories.BooksRepository;
@@ -41,8 +42,9 @@ public class BooksServiceUnitTests {
 
     @BeforeEach
     public void setUp() {
-        this.books = Arrays.asList(new Book(1, "Title 1", 2024, "Kamil", new ArrayList<>()),
-                new Book(2, "Title 2", 2023, "Kamil", new ArrayList<>()));
+        this.books = Arrays.asList(new Book(1, "Title 1", 2024, "Kamil", Publisher.POLLUB,
+                        new ArrayList<>()),
+                new Book(2, "Title 2", 2023, "Kamil", Publisher.POLLUB, new ArrayList<>()));
     }
 
     @Test
@@ -75,8 +77,8 @@ public class BooksServiceUnitTests {
 
     @Test
     public void testAddBook() {
-        Book newBook = new Book(1, "Title 2", 2023, "Kamil", new ArrayList<>());
-        AddBookDTO newBookDTO = new AddBookDTO("Title 2", "2023", "Kamil");
+        Book newBook = new Book(1, "Title 2", 2023, "Kamil", Publisher.POLLUB, new ArrayList<>());
+        AddBookDTO newBookDTO = new AddBookDTO("Title 2", "2023", "Kamil", Publisher.POLLUB);
         when(this.booksRepository.save(any(Book.class))).thenReturn(newBook);
         assertEquals(this.booksService.addBook(newBookDTO),
                 ResponseEntity.ok(new SuccessResponse("Book added successfully")));

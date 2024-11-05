@@ -1,5 +1,7 @@
 package com.example.booksAPI.dto;
 
+import com.example.booksAPI.enums.Publisher;
+import com.example.booksAPI.validation.annotations.ValueOfEnum;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -21,4 +23,8 @@ public class AddBookDTO {
     @NotNull(message = "cannot be null")
     @NotEmpty(message = "cannot be empty")
     private String author;
+
+    @ValueOfEnum(enumClass = Publisher.class, message = "must be any of: 'POLLUB', 'UMCS', 'UP'")
+    @NotNull(message = "cannot be null")
+    private String publisher;
 }

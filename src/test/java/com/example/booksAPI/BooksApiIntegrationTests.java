@@ -1,6 +1,7 @@
 package com.example.booksAPI;
 
 import com.example.booksAPI.dto.*;
+import com.example.booksAPI.enums.Publisher;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
@@ -63,7 +64,7 @@ class BooksApiIntegrationTests {
 	@Order(5)
 	@Test
 	public void testAddBook() throws Exception {
-		AddBookDTO newBook = new AddBookDTO("BOOOOM", "2020", "Kamil");
+		AddBookDTO newBook = new AddBookDTO("BOOOOM", "2020", "Kamil", Publisher.POLLUB);
 		this.mockMvc.perform(post("/books")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(this.mapper.writeValueAsString(newBook)))

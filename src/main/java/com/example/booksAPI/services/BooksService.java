@@ -3,6 +3,7 @@ package com.example.booksAPI.services;
 import com.example.booksAPI.dto.*;
 import com.example.booksAPI.entities.Book;
 import com.example.booksAPI.entities.Rating;
+import com.example.booksAPI.enums.Publisher;
 import com.example.booksAPI.exceptions.BadRequestException;
 import com.example.booksAPI.exceptions.ResourceNotFoundException;
 import com.example.booksAPI.repositories.BooksRepository;
@@ -42,6 +43,7 @@ public class BooksService {
         book.setAuthor(newBook.getAuthor());
         book.setYear(Integer.parseInt(newBook.getYear()));
         book.setTitle(newBook.getTitle());
+        book.setPublisher(Publisher.valueOf(newBook.getPublisher()));
         this.booksRepository.save(book);
         return ResponseEntity.ok(new SuccessResponse("Book added successfully"));
     }
