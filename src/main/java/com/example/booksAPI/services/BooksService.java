@@ -41,7 +41,7 @@ public class BooksService {
     public ResponseEntity<SuccessResponse> addBook(AddBookDTO newBook) {
         Book book = new Book();
         book.setAuthor(newBook.getAuthor());
-        book.setYear(Integer.parseInt(newBook.getYear()));
+        book.setPublication_year(Integer.parseInt(newBook.getYear()));
         book.setTitle(newBook.getTitle());
         book.setPublisher(Publisher.valueOf(newBook.getPublisher()));
         this.booksRepository.save(book);
@@ -84,7 +84,7 @@ public class BooksService {
             foundBook.setTitle(updatedBook.getTitle());
         }
         if(newYear != null) {
-            foundBook.setYear(Integer.parseInt(updatedBook.getYear()));
+            foundBook.setPublication_year(Integer.parseInt(updatedBook.getYear()));
         }
         this.booksRepository.save(foundBook);
         return ResponseEntity.ok(new SuccessResponse("Book updated successfully"));

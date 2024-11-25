@@ -17,7 +17,7 @@ public class AddBookDTO {
 
     @NotNull(message = "cannot be null")
     @NotEmpty(message = "cannot be empty")
-    @Pattern(regexp = "^(19[0-9]{2}|20[0-9]{2})$", message = "it is not a year")
+    @Pattern(regexp = "^(19[0-9]{2}|20[0-9]{2})$", message = "it is not a valid year")
     private String year;
 
     @NotNull(message = "cannot be null")

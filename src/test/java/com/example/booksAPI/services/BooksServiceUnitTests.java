@@ -78,7 +78,7 @@ public class BooksServiceUnitTests {
     @Test
     public void testAddBook() {
         Book newBook = new Book(1, "Title 2", 2023, "Kamil", Publisher.POLLUB, new ArrayList<>());
-        AddBookDTO newBookDTO = new AddBookDTO("Title 2", "2023", "Kamil", Publisher.POLLUB);
+        AddBookDTO newBookDTO = new AddBookDTO("Title 2", "2023", "Kamil", "POLLUB");
         when(this.booksRepository.save(any(Book.class))).thenReturn(newBook);
         assertEquals(this.booksService.addBook(newBookDTO),
                 ResponseEntity.ok(new SuccessResponse("Book added successfully")));
