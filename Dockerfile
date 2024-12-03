@@ -4,7 +4,8 @@ COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-FROM openjdk:21
+FROM eclipse-temurin:21-alpine
+RUN apk add --no-cache netcat-openbsd
 WORKDIR /app
 COPY --from=builder /app/target/booksAPI-0.0.1-SNAPSHOT.jar app.jar
 EXPOSE 8080
