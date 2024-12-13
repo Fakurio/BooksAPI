@@ -186,4 +186,16 @@ class BooksApiIntegrationTests {
 		Optional<Book> found = booksRepository.findById(savedBook.getId());
 		assertThat(found.isPresent()).isFalse();
 	}
+	@Test
+	public void itShouldThrowExceptionWhenUpdatingBook_InvalidYear() throws Exception {
+		UpdateBookDTO invalidYearDTO = new UpdateBookDTO("Valid Title", "3000", "Valid Author");
+
+		this.mockMvc.perform(put("/books/1")
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(this.mapper.writeValueAsString(invalidYearDTO)))
+				.andExpect(jsonPath("$.year").value("it is not a year"))
+				.andExpect(status().isBadRequest());
+	}
+
+
 }
